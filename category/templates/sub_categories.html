@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_title %}
+Sub Categories
+{% endblock %}
+{% block mainbody %}
+    <div class="container">
+      <!-- Top Navigation -->
+      <header class="codrops-header">
+      </header>
+      <section id="grid" class="grid clearfix">
+      {% for sub_category in sub_categories %}
+        <a href="{% url 'reports' %}?sub_category_id={{sub_category.id}}" data-path-hover="M 0,0 0,38 90,58 180.5,38 180,0 z">
+          <figure>
+            <img src="{% static 'img/2.png' %}" style="height: 250px;" />
+            <svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 0 0 L 0 182 L 90 126.5 L 180 182 L 180 0 L 0 0 z "/></svg>
+            <figcaption>
+              <h2>{{ sub_category.name }}</h2>
+              <button>View Reports</button>
+            </figcaption>
+          </figure>
+        </a>{% endfor %}
+      </section>
+    </div><!-- /container -->
+{% endblock %}

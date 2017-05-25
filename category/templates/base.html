@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" class="demo-1 no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="Hover Effects with animated SVG Shapes using Snap.svg" />
+    <meta name="keywords" content="animated svg, hover effect, grid, svg shape html, " />
+    <meta name="author" content="Codrops" />
+    <title>{% block body_title %}{% endblock %}</title>
+
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css//bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
+
+  <!-- Need to decide on one of multiselect and select2 -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.1/jquery.dataTables.yadcf.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
+
+    <script src="{% static 'js/snap.svg-min.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <!-- Need to decide on one of multiselect and select2 -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.js"></script>
+
+    <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.1/jquery.dataTables.yadcf.min.js"></script>
+    <script src="{% static 'js/report.js' %}"></script>
+    <style type="text/css">
+        .demo-1 body {
+            background: #d1e0e0;
+        }
+    </style>
+    <!--[if IE]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  {% block mainbody %}{% endblock %}
+    <script>
+      (function() {
+  
+        function init() {
+          var speed = 250,
+            easing = mina.easeinout;
+
+          [].slice.call ( document.querySelectorAll( '#grid > a' ) ).forEach( function( el ) {
+            var s = Snap( el.querySelector( 'svg' ) ), path = s.select( 'path' ),
+              pathConfig = {
+                from : path.attr( 'd' ),
+                to : el.getAttribute( 'data-path-hover' )
+              };
+
+            el.addEventListener( 'mouseenter', function() {
+              path.animate( { 'path' : pathConfig.to }, speed, easing );
+            } );
+
+            el.addEventListener( 'mouseleave', function() {
+              path.animate( { 'path' : pathConfig.from }, speed, easing );
+            } );
+          } );
+        }
+
+        init();
+
+      })();
+    </script>
+  </body>
+</html>

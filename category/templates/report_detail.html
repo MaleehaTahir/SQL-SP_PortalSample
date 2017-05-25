@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_title %}
+    Report Procedure
+{% endblock %}
+{% block mainbody %}
+    <br><br><br>
+    <div class="container">
+        <!-- Top Navigation -->
+        <header class="codrops-header">
+            <h1>{{ report.name }}</h1>
+        </header>
+    <form method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <p><span style="color: black; font-size: 17px;">Start Date: </span>
+                        <input type="text" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+                        (Should be in YYYY-MM-DD)</p>
+                </div>
+                <div class="col-md-3">
+                    <p><span style="color: black; font-size: 17px;">End Date: </span>
+                        <input type="text" id="end_date" name="end_date" value="{{ end_date|date:'Y-m-d' }}"> (Should be in YYYY-MM-DD)</p>
+                </div>
+                {% for filter_name, filter_value in filters.items %}
+                <div class="col-md-3">
+                    <p><span style="color: black; font-size: 17px;">{{ filter_name|capfirst }}: </span>
+                        <input type="text" id="{{ filter_name }}" name="{{ filter_name }}" value="{{ filter_value }}"></p>
+                </div>
+                {% endfor %}
+                <div class="col-md-3">
+                    <input type="submit" class="btn btn-warning" value="Filter">
+                </div>
+                <br><br><br><br>
+            </div>
+    </form>
+        {% if rows %}
+            <div class="input-group">
+                <h2>Details of {{ report.name }} Report </h2>
+                <span class="input-group-btn">
+          <a href="{% url 'report-detail' report_id=report_id %}?start_date={{ start_date }}&end_date={{ end_date }}&export=true"
+             class="btn btn-success pull-right" id="export">Export as excel</a>
+      </span>
+            </div>
+            <table class="table table-bordered" id="report_table">
+                <thead class="thead-inverse">
+                <tr style="color: black; background-color: white;">
+                    {% for field_name in field_names %}
+                    <th>{{ field_name }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+            <tfoot>
+                <tr style="color: black; background-color: white;">
+                    {% for field_name in field_names %}
+                    <td></td>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+                <tbody>
+                {% for row in rows %}
+                    <tr class="active">
+                        {% for field in row %}
+                        <td>{{ field }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3> No data found</h3>
+        {% endif %}
+    </div><!-- /container -->
+{% endblock %}
